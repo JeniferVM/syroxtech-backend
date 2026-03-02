@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProductDto } from './dto/product.dto';
@@ -7,8 +8,12 @@ export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createProductDto: ProductDto) {
+    const { categoryId, ...rest } = createProductDto;
     return this.prisma.product.create({
-      data: createProductDto,
+      data: {
+        ...rest,
+        ...(categoryId ? { categoryId } : {}),
+      } as any,
     });
   }
 

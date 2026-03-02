@@ -7,8 +7,16 @@ export class CategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createCategoryDto: CategoryDto) {
+    console.log('DTO recibido:', createCategoryDto);
+
+    const { parentId, ...rest } = createCategoryDto;
+    console.log('parentId:', parentId);
+
     return this.prisma.category.create({
-      data: createCategoryDto,
+      data: {
+        ...rest,
+        ...(parentId ? { parentId } : {}),
+      },
     });
   }
 

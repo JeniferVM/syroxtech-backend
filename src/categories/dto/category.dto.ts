@@ -1,7 +1,14 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNumber } from 'class-validator';
 
 export class CategoryDto {
   @IsString()
-  @IsNotEmpty()
   name: string;
+
+  @IsNumber()
+  @IsOptional()
+  position?: number;
+
+  @IsString()
+  @IsOptional()
+  parentId?: string;
 }
