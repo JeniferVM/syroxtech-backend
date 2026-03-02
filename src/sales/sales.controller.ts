@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { SalesDto } from './dto/sale.dto';
 import { UseGuards } from '@nestjs/common';
@@ -17,5 +25,18 @@ export class SalesController {
   @Get()
   getAllSales() {
     return this.salesService.findAll();
+  }
+
+  @Patch(':id')
+  updateSale(
+    @Param('id') id: string,
+    @Body() updateSaleDto: Partial<SalesDto>,
+  ) {
+    return this.salesService.update(id, updateSaleDto);
+  }
+
+  @Delete(':id')
+  removeSale(@Param('id') id: string) {
+    return this.salesService.remove(id);
   }
 }

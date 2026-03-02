@@ -15,4 +15,17 @@ export class SalesService {
   findAll() {
     return this.prisma.sale.findMany();
   }
+
+  update(id: string, updateSaleDto: Partial<SalesDto>) {
+    return this.prisma.sale.update({
+      where: { id },
+      data: updateSaleDto,
+    });
+  }
+
+  remove(id: string) {
+    return this.prisma.sale.delete({
+      where: { id },
+    });
+  }
 }
